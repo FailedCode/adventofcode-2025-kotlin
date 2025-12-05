@@ -1,3 +1,5 @@
+package aoc.Day1
+
 import java.io.File
 import kotlin.math.*
 
