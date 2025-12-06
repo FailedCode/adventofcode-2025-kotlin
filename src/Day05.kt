@@ -7,8 +7,8 @@ fun main(){
     val (ranges, ids) = getInput("input/day05.txt")
 
     println(">")
-    println(part1(ranges, ids))
-//    println(part2(ranges, ids))
+//    println(part1(ranges, ids))
+    println(part2(ranges))
 }
 data class Range(val min:Long, val max:Long)
 data class Input(val ranges: ArrayList<Range>, val ids: ArrayList<Long>)
@@ -60,4 +60,43 @@ fun is_in_ranges(ranges: ArrayList<Range>, id: Long): Boolean {
         return true
     }
     return false
+}
+
+/**
+ * Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ */
+fun __part2(ranges: ArrayList<Range>): String {
+    var ids:MutableSet<Long> = mutableSetOf()
+    for (range in ranges) {
+        for (i in range.min .. range.max) {
+            ids.add(i)
+        }
+    }
+    return ids.count().toString()
+}
+
+/**
+ * lower an upper bound are about 559454809365675 values to test
+ */
+fun ___part2(ranges: ArrayList<Range>): String {
+    var min_value:Long = ranges[0].min
+    var max_value:Long = 0
+    for (range in ranges) {
+        min_value = min(range.min, min_value)
+        max_value = max(range.max, max_value)
+    }
+
+    var result: Long = 0
+    for (i in min_value .. max_value) {
+        if (is_in_ranges(ranges, i)) {
+            result += 1
+        }
+    }
+
+    return result.toString()
+}
+
+fun part2(ranges: ArrayList<Range>): String {
+    var result: Long = 0
+    return result.toString()
 }
