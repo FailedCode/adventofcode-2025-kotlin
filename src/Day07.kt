@@ -8,8 +8,8 @@ fun main() {
     val manifold = getInput("input/day07.txt")
 
     println(">")
-    println(part1(manifold))
-//    println(part2(manifold))
+//    println(part1(manifold))
+    println(part2(manifold))
 }
 
 data class Manifold(val grid: ArrayList<ArrayList<Int>>, val startpos: Pair<Int, Int>)
@@ -89,6 +89,38 @@ fun part1(manifold: Manifold): String {
     return result.toString()
 }
 
+/**
+ *  Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ *  => too many rays at the same time. Need to travel one path at a time - need to build graph first, then travvel it
+ *  recursively...
+ */
+fun __part2(manifold: Manifold): String {
+    var result: Long = 1
+    val max_y = manifold.grid.size - 1
+    var rays: ArrayList<Ray> = ArrayList()
+    var raysNext: ArrayList<Ray> = ArrayList()
+    rays.add(Ray(manifold.startpos.first, manifold.startpos.second))
+
+    while (!rays.isEmpty()) {
+        for (ray in rays) {
+            if (manifold.grid[ray.y + 1][ray.x] == 1) {
+                // split event!
+                result += 1
+                raysNext.add(Ray(ray.y + 1, ray.x + 1))
+                raysNext.add(Ray(ray.y + 1, ray.x - 1))
+            } else {
+                ray.y += 1
+                if (ray.y < max_y) {
+                    raysNext.add(Ray(ray.y, ray.x))
+                }
+            }
+        }
+        rays = raysNext
+        raysNext = ArrayList()
+    }
+
+    return result.toString()
+}
 
 fun part2(manifold: Manifold): String {
     var result: Long = 0
