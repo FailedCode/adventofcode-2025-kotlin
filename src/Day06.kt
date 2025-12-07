@@ -5,17 +5,17 @@ import kotlin.collections.ArrayList
 import kotlin.math.*
 
 fun main() {
-    val mathProblems = getInput("input/day06.txt")
+    val mathProblems1 = getInput1("input/day06example.txt")
+    val mathProblems2 = getInput2("input/day06example.txt")
 
     println(">")
-
-    println(part1(mathProblems))
-//    println(part2(lines))
+//    println(part1(mathProblems1))
+    println(part2(mathProblems2))
 }
 
 data class MathProblem(val numbers: ArrayList<Long>, val symbol: String)
 
-fun getInput(filepath: String): ArrayList<MathProblem> {
+fun getInput1(filepath: String): ArrayList<MathProblem> {
     val mathProblems = ArrayList<MathProblem>()
     var lines = File(filepath).readLines()
     val symbols = lines.last().split(" ").filterNot { it.isEmpty() }
@@ -41,6 +41,19 @@ fun getInput(filepath: String): ArrayList<MathProblem> {
     return mathProblems
 }
 
+fun getInput2(filepath: String): ArrayList<MathProblem> {
+    val mathProblems = ArrayList<MathProblem>()
+    var lines = File(filepath).readLines()
+    val symbols = lines.last().split(" ").filterNot { it.isEmpty() }
+    lines = lines.dropLast(1)
+    for (line in lines) {
+        for (value in line.split("")) {
+            println(value)
+        }
+    }
+    return mathProblems
+}
+
 fun part1(mathProblems: ArrayList<MathProblem>): String {
     var result: Long = 0
 
@@ -57,6 +70,5 @@ fun part1(mathProblems: ArrayList<MathProblem>): String {
 }
 
 fun part2(mathProblems: ArrayList<MathProblem>): String {
-    var result: Long = 0
-    return result.toString()
+    return part1(mathProblems)
 }
